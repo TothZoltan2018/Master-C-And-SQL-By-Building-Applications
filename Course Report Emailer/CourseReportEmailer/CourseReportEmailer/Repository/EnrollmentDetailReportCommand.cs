@@ -23,6 +23,7 @@ namespace CourseReportEmailer.Repository
 
             var sql = "EnrollmentReport_GetList"; //Stored procedure in SQL SMS
 
+            //Dapper es az SQL client nuget package-et installatuk
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 enrollmentDetailReport = connection.Query<EnrollmentDetailReportModel>(sql).ToList();
