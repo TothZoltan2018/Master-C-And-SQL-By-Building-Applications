@@ -49,6 +49,38 @@ namespace CourseReportEmailer.Workers
                 };
                 //Adjunk hozza a most letrehozott Sheet-et.
                 sheetList.Append(singleSheet);
+
+                //### Tegyuk bele a DataTable-unket a WorkSheet-be ###
+                //Kezdjuk a tablazat fejlecevel.
+                Row excelTitleRow = new Row();
+
+                foreach (DataColumn tableColumn in enrollmentsTable.Columns)
+                {
+                    Cell cell = new Cell();
+                    cell.DataType = CellValues.String;
+                    cell.CellValue = new CellValue(tableColumn.ColumnName); //EnrollmentId FirstName LastName CourseCode Description
+                    excelTitleRow.Append(cell);
+                }
+
+                sheetData.AppendChild(excelTitleRow);
+
+                //Adatok felvitele
+                foreach (DataRow tableRow in enrollmentsTable.Rows)
+                {
+                    Row excelNewRow = new Row();
+                    foreach (DataColumn tableColumns in enrollmentsTable.Columns)
+                    {
+                        Cell cell = new Cell();
+                        cell.DataType = CellValues.String;
+                        cell.CellValue = new CellValue(tableRow[tableColumns.ColumnName].ToString());
+                        excelNewRow.AppendChild(cell);
+                        //excelNewRow.Append(cell); //ToDo: ?
+                    }
+
+                    sheetData.AppendChild(excelNewRow);
+                }
+
+                workbookPart.Workbook.Save();
             }
 
         }
