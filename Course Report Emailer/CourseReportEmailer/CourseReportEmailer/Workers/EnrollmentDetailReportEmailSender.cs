@@ -14,7 +14,7 @@ namespace CourseReportEmailer.Workers
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             
-            NetworkCredential creds = new NetworkCredential("toth.tozso.zoltan@gmail.com", "mockPassword");
+            NetworkCredential creds = new NetworkCredential("toth.tozso.zoltan@gmail.com", "SuperSecret");
             client.EnableSsl = true;
             client.Credentials = creds;
 
