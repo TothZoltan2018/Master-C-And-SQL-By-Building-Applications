@@ -23,7 +23,7 @@ namespace CourseManager.Repository
         {
             List<EnrollmentModel> enrollments = new List<EnrollmentModel>();
 
-            var sql = "Enrollments_GetList";
+            var sql = "Enrollment_GetList";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -41,7 +41,7 @@ namespace CourseManager.Repository
 
         public void Upsert(EnrollmentModel enrollmentModel)
         {
-            var sql = "Enrollments_Upsert";
+            var sql = "Enrollment_Upsert";
             //Windows username
             var userId = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString(); //Szerintem nem kell a ToString()
 
