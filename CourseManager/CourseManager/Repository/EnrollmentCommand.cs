@@ -33,7 +33,7 @@ namespace CourseManager.Repository
             //Beallitjuk, hogy ezek a mar elmentett adatok, nem pedig a most felvitt ujak.
             foreach (var enrollment in enrollments)
             {
-                enrollment.IsCommitted = true;
+                //enrollment.IsCommitted = true;
             }
 
             return enrollments;
@@ -45,7 +45,7 @@ namespace CourseManager.Repository
             //Windows username
             var userId = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString(); //Szerintem nem kell a ToString()
 
-            //Az SQL Serveren taolt stored procedure User ddwfined Table tipust fogad. Adattablaban adjuk at neki.
+            //Az SQL Serveren tarolt stored procedure User defined Table tipust fogad. Adattablaban adjuk at neki.
             var dataTable = new DataTable();
             dataTable.Columns.Add("EnrollmentId", typeof(int));
             dataTable.Columns.Add("StudentId", typeof(int));

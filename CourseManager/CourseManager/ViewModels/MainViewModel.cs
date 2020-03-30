@@ -36,13 +36,14 @@ namespace CourseManager.ViewModels
             }
             catch (Exception ex)
             {
-                AppStatus = ex.Message;
+                //AppStatus = ex.Message;
                 //Mindig, ha megvaltozik az AppStatus, akkor az AppStatus property ertesuljon rola. Alert the UI. (Lasd MainView.xaml, StatusBar)
                 UpdateAppStatus(ex.Message);
             }
         }
 
         #region These are the properties which the View can bind to.
+        //Ez a Course ComboBox property-je
         public CourseModel SelectedEnrollmentCourse
         {
             get
@@ -80,6 +81,7 @@ namespace CourseManager.ViewModels
             }
         }
 
+        //Ez a Student ComboBox property-je
         public StudentModel SelectedEnrollmentStudent
         {
             get
@@ -155,9 +157,43 @@ namespace CourseManager.ViewModels
         }
         #endregion
 
+        public void CreateNewEnrollment()
+        {
+            try
+            {
+                SelectedEnrollment = new EnrollmentModel();
+                UpdateAppStatus("New Enrollment created.");
+            }
+            catch (Exception ex)
+            {
+                UpdateAppStatus(ex.Message);
+            }
+        }
+
+        public void SaveEnrollment()
+        {
+            try
+            {
+                var enrollmentsDictionary = _enrollments.ToDictionary(p => p.EnrollmentId);
+                if (SelectedEnrollment != null)                
+                {
+                    _enrollmentCommand.Upsert(SelectedEnrollment);
+
+                    Enrollments.Clear(); //Torlojuk a ListBox-ot
+                    Enrollments.AddRange(_enrollmentCommand.GetList());//Megjelenitjuk benne az uj listat
+                    UpdateAppStatus("Enrollment saved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                UpdateAppStatus(ex.Message);
+            }
+        }
+
         private void UpdateAppStatus(string message)
-        {            
-            NotifyOfPropertyChange(() => message);
+        {
+            AppStatus = message;
+            NotifyOfPropertyChange(() => AppStatus);
         }
 
     }
